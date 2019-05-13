@@ -1,14 +1,58 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.company.event.relation.domain.service;
 
-/**
- *
- * @author elzua
- */
+import com.example.company.event.relation.domain.model.Company;
+import com.example.company.event.relation.domain.model.CompanyEventRelationship;
+import com.example.company.event.relation.domain.model.CompanyEventRelationshipEntity;
+import com.example.company.event.relation.domain.model.Event;
+import com.example.company.event.relation.domain.repository.CompanyEventRelationshipRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class CompanyEventRelationshipService {
+    
+    private CompanyService companyService;
+    private EventService eventService;
+    private CompanyEventRelationshipRepository repository;
+
+    @Autowired
+    public CompanyEventRelationshipService(CompanyService companyService, EventService eventService, CompanyEventRelationshipRepository repository) {
+        this.companyService = companyService;
+        this.eventService = eventService;
+        this.repository = repository;
+    }
+    
+    public CompanyEventRelationship saveCompanyEventRelation(String idCompany, String idEvent) {
+        Company company = getCompanyById(idCompany);
+        Event event = getEventById(idEvent);
+        CompanyEventRelationship companyEventRelation = buildComanyEventRelation(company, event);
+        if(company != null && event != null) {
+            CompanyEventRelationshipEntity companyEventRelationSaved = saveComanyEventRelationEntity(company, event);
+            companyEventRelation.setIdEventoEmpresa(companyEventRelationSaved.getIdEventoEmpresa());
+        }
+        return companyEventRelation;
+    }
+    
+    private CompanyEventRelationshipEntity saveComanyEventRelationEntity(Company company, Event event) {
+        CompanyEventRelationshipEntity companyEventRelation = new CompanyEventRelationshipEntity();
+        companyEventRelation.setIdEmpresa(company.getIdEmpresa());
+        companyEventRelation.setIdEvento(event.getIdEvento());
+        return repository.save(companyEventRelation);
+    }
+    
+    private CompanyEventRelationship buildComanyEventRelation(Company company, Event event) {
+        CompanyEventRelationship companyEventRelation = new CompanyEventRelationship();
+        companyEventRelation.setCompany(company);
+        companyEventRelation.setEvent(event);
+        return companyEventRelation;
+    }
+    
+    private Company getCompanyById(String id) {
+        return companyService.getcompanyById(id);
+    }
+    
+    private Event getEventById(String id) {
+        return eventService.getEventById(id);
+    }
     
 }

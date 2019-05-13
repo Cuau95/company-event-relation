@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class CompanyEventRelationship implements Serializable {
     
     private int idEventoEmpresa;
-    private Company idEmpresa;
-    private Event idEvento;
+    private Company company;
+    private Event event;
 
     public int getIdEventoEmpresa() {
         return idEventoEmpresa;
@@ -16,20 +16,20 @@ public class CompanyEventRelationship implements Serializable {
         this.idEventoEmpresa = idEventoEmpresa;
     }
 
-    public Company getIdEmpresa() {
-        return idEmpresa;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setIdEmpresa(Company idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
-    public Event getIdEvento() {
-        return idEvento;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setIdEvento(Event idEvento) {
-        this.idEvento = idEvento;
+    public void setEvent(Event event) {
+        this.event = event;
     }
     
 }
