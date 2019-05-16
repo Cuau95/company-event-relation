@@ -25,22 +25,22 @@ public class CompanyEventRelationshipService {
     public CompanyEventRelationship saveCompanyEventRelation(String idCompany, String idEvent) {
         Company company = getCompanyById(idCompany);
         Event event = getEventById(idEvent);
-        CompanyEventRelationship companyEventRelation = buildComanyEventRelation(company, event);
+        CompanyEventRelationship companyEventRelation = buildCompanyEventRelation(company, event);
         if(company != null && event != null) {
-            CompanyEventRelationshipEntity companyEventRelationSaved = saveComanyEventRelationEntity(company, event);
+            CompanyEventRelationshipEntity companyEventRelationSaved = saveCompanyEventRelationEntity(company, event);
             companyEventRelation.setIdEventoEmpresa(companyEventRelationSaved.getIdEventoEmpresa());
         }
         return companyEventRelation;
     }
     
-    private CompanyEventRelationshipEntity saveComanyEventRelationEntity(Company company, Event event) {
+    private CompanyEventRelationshipEntity saveCompanyEventRelationEntity(Company company, Event event) {
         CompanyEventRelationshipEntity companyEventRelation = new CompanyEventRelationshipEntity();
         companyEventRelation.setIdEmpresa(company.getIdEmpresa());
         companyEventRelation.setIdEvento(event.getIdEvento());
         return repository.save(companyEventRelation);
     }
     
-    private CompanyEventRelationship buildComanyEventRelation(Company company, Event event) {
+    private CompanyEventRelationship buildCompanyEventRelation(Company company, Event event) {
         CompanyEventRelationship companyEventRelation = new CompanyEventRelationship();
         companyEventRelation.setCompany(company);
         companyEventRelation.setEvent(event);
